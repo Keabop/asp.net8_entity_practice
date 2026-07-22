@@ -1,0 +1,55 @@
+@*
+    VISTA: Index (lista de áreas)
+    ---------------------------------------------------------------------------
+    Una VISTA en Razor es HTML con "trozos" de C# incrustados usando @.
+    El navegador solo recibe HTML normal: el C# se ejecuta EN EL SERVIDOR y
+    su resultado se convierte en texto antes de enviarse.
+
+    @model List<Area>  ->  declara QUÉ datos recibe esta vista desde el
+    controlador. Aquí, la lista de áreas que armamos en AreasController.Index().
+*@
+@model List<CapacitacionRH.Models.Area>
+
+@{
+    // Bloque de código C#. Aquí solo fijamos el título de la pestaña/página.
+    ViewData["Title"] = "Áreas de la planta";
+}
+
+<h1>Áreas de la planta</h1>
+
+<p>
+    @* asp-action genera el enlace hacia la acción "Create" de este controlador. *@
+    <a asp-action="Create" class="btn btn-primary">+ Nueva área</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @* Recorremos la lista con un foreach de C#. Por cada área, una fila. *@
+        @foreach (var area in Model)
+        {
+            <tr>
+                <td>@area.Nombre</td>
+                <td>@area.Descripcion</td>
+                <td>
+                    @* asp-route-id pasa el Id del área en la URL (ej: /Areas/Edit/3). *@
+                    <a asp-action="Details" asp-route-id="@area.Id">Ver</a> |
+                    <a asp-action="Edit" asp-route-id="@area.Id">Editar</a> |
+                    <a asp-action="Delete" asp-route-id="@area.Id">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@* Si la lista está vacía, mostramos un mensaje amable en lugar de una tabla vacía. *@
+@if (!Model.Any())
+{
+    <p class="text-muted">Todavía no hay áreas registradas. ¡Crea la primera!</p>
+}

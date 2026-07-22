@@ -1,0 +1,25 @@
+@*
+    VISTA: Details (ver los datos de UN área, sin editar)
+    ---------------------------------------------------------------------------
+    <dl> es una "lista de definiciones" de HTML: pares etiqueta/valor.
+    Html.DisplayNameFor y DisplayFor usan el modelo para mostrar el nombre
+    "bonito" ([Display(Name=...)]) y el valor de cada propiedad.
+*@
+@model CapacitacionRH.Models.Area
+
+@{
+    ViewData["Title"] = "Detalle del área";
+}
+
+<h1>Detalle del área</h1>
+
+<dl class="row">
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Nombre)</dt>
+    <dd class="col-sm-9">@Model.Nombre</dd>
+
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Descripcion)</dt>
+    <dd class="col-sm-9">@Model.Descripcion</dd>
+</dl>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Editar</a>
+<a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>

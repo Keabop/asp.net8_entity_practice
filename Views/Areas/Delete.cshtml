@@ -1,0 +1,32 @@
+@*
+    VISTA: Delete (confirmación antes de borrar)
+    ---------------------------------------------------------------------------
+    Primero MOSTRAMOS los datos y pedimos confirmación. El borrado real ocurre
+    solo cuando el usuario pulsa "Eliminar", que hace un POST a /Areas/Delete.
+*@
+@model CapacitacionRH.Models.Area
+
+@{
+    ViewData["Title"] = "Eliminar área";
+}
+
+<h1>Eliminar área</h1>
+
+<div class="alert alert-warning">
+    ¿Seguro que deseas eliminar esta área? Esta acción no se puede deshacer.
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Nombre)</dt>
+    <dd class="col-sm-9">@Model.Nombre</dd>
+
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Descripcion)</dt>
+    <dd class="col-sm-9">@Model.Descripcion</dd>
+</dl>
+
+@* Este formulario envía (POST) a la acción Delete. El campo oculto lleva el Id. *@
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

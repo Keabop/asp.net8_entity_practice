@@ -1,0 +1,25 @@
+# ============================================================================
+#  .gitignore  ->  qué archivos NO se suben al repositorio (Git los ignora)
+# ----------------------------------------------------------------------------
+#  Ignoramos todo lo que se GENERA automáticamente y se puede volver a crear:
+#  resultados de compilación, la base de datos local, archivos temporales.
+#  Así el repo queda limpio y ligero: solo el CÓDIGO FUENTE, que es lo valioso.
+# ============================================================================
+
+# Resultados de compilación (.dll, etc.). Se regeneran con "dotnet build".
+bin/
+obj/
+
+# Base de datos local de SQLite. Cada quien la crea con "dotnet ef database update".
+# (No conviene versionar la BD: es un archivo binario que cambia constantemente.)
+*.db
+*.db-shm
+*.db-wal
+
+# Carpetas de configuración de editores/IDEs
+.vs/
+.vscode/
+.idea/
+
+# Archivos de usuario de Visual Studio
+*.user
