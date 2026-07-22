@@ -1,0 +1,44 @@
+@*
+    VISTA: Create (formulario para crear un área nueva)
+    ---------------------------------------------------------------------------
+    Aquí el @model es UNA sola Area (vacía), no una lista.
+    Los "asp-*" son Tag Helpers: atributos especiales de ASP.NET que generan
+    HTML inteligente conectado a tu modelo (etiquetas, validación, nombres...).
+*@
+@model CapacitacionRH.Models.Area
+
+@{
+    ViewData["Title"] = "Nueva área";
+}
+
+<h1>Nueva área</h1>
+
+@* asp-action="Create" -> el formulario se enviará (POST) a la acción Create. *@
+<form asp-action="Create" method="post">
+    @* Muestra un resumen de todos los errores de validación, si los hay. *@
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        @* asp-for="Nombre" conecta esta etiqueta/campo con la propiedad Nombre.
+           Genera el <label>, el <input>, el name correcto y las reglas de
+           validación automáticamente a partir del modelo. *@
+        <label asp-for="Nombre" class="form-label"></label>
+        <input asp-for="Nombre" class="form-control" />
+        <span asp-validation-for="Nombre" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Descripcion" class="form-label"></label>
+        <textarea asp-for="Descripcion" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="Descripcion" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
+
+@* Trae el JavaScript que valida el formulario EN EL NAVEGADOR (antes de enviar),
+   para avisar al usuario al instante sin recargar la página. *@
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
