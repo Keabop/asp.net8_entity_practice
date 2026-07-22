@@ -45,6 +45,28 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 var app = builder.Build();
 
 // ---------------------------------------------------------------------------
+// CREAR / ACTUALIZAR LA BASE DE DATOS AUTOMÁTICAMENTE AL ARRANCAR
+// ---------------------------------------------------------------------------
+//  El archivo de base de datos (CapacitacionRH.db) NO viaja en el repositorio
+//  (lo ignora .gitignore). Por eso, la primera vez que alguien clona y ejecuta
+//  el proyecto, la BD no existe todavía.
+//
+//  Estas líneas piden el ApplicationDbContext y llaman a Database.Migrate(),
+//  que aplica TODAS las migraciones pendientes: si la BD no existe, la crea;
+//  si le faltan tablas, las agrega. Así, con solo ejecutar la app, la base de
+//  datos queda lista. (Es el equivalente en código a 'dotnet ef database update'.)
+//
+//  Nota para el futuro: hacer esto al arrancar es muy cómodo para APRENDER y
+//  para desarrollo. En un sistema REAL en producción se suele aplicar las
+//  migraciones de forma controlada (en el despliegue), no automáticamente al
+//  iniciar la app. Por ahora, para ti, esto es lo más práctico.
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    db.Database.Migrate();
+}
+
+// ---------------------------------------------------------------------------
 // BLOQUE 2: PIPELINE (la cadena por la que pasa cada petición)
 // ---------------------------------------------------------------------------
 
